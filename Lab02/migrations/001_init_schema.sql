@@ -1,6 +1,6 @@
 -- 001_init_schema.sql
 -- Initial Schema Setup for SpeedVerse
--- Author: Saadman Sakib (ID : 210042165)
+-- Author: Saadman Sakib 210042165
 -- Description: Creates base tables and inserts sample data
 
 DROP TABLE IF EXISTS car_parts, race_rewards, race_participation, player_preferences, parts, cars, races, players;
@@ -60,8 +60,7 @@ CREATE TABLE race_participation
     car_id INT REFERENCES cars(car_id) ON DELETE CASCADE,
     race_id INT REFERENCES races(race_id) ON DELETE CASCADE,
     completed_at TIMESTAMP,
-    rating INT CHECK (rating BETWEEN 1 AND 5),
-    rating_timestamp TIMESTAMP
+    is_up_vote BOOLEAN
 );
 
 -- 7. Race Rewards (Many-to-Many: races ⇄ parts)
@@ -80,7 +79,7 @@ CREATE TABLE player_preferences
     PRIMARY KEY (player_id, part_type)
 );
 
--- I have used AI to generate these sample data -- 
+-- SAMPLE DATA (I have used AI to generate this part) --
 
 -- Players
 INSERT INTO players (username, email) VALUES
@@ -116,11 +115,11 @@ INSERT INTO races (name, city, duration_minutes) VALUES
 ('Solar Sprint', 'Solar Drift', 40);
 
 -- Race Participation
-INSERT INTO race_participation (car_id, race_id, completed_at, rating, rating_timestamp) VALUES
-(1, 1, CURRENT_TIMESTAMP - INTERVAL '3 days', 4, CURRENT_TIMESTAMP - INTERVAL '2 days'),
-(2, 2, CURRENT_TIMESTAMP - INTERVAL '2 days', 5, CURRENT_TIMESTAMP - INTERVAL '1 day'),
-(3, 3, CURRENT_TIMESTAMP - INTERVAL '1 day', NULL, NULL),
-(4, 4, CURRENT_TIMESTAMP, 3, CURRENT_TIMESTAMP);
+INSERT INTO race_participation (car_id, race_id, completed_at, is_up_vote) VALUES
+(1, 1, CURRENT_TIMESTAMP - INTERVAL '3 days', true),
+(2, 2, CURRENT_TIMESTAMP - INTERVAL '2 days', true),
+(3, 3, CURRENT_TIMESTAMP - INTERVAL '1 day', NULL),
+(4, 4, CURRENT_TIMESTAMP, false);
 
 -- Race Rewards
 INSERT INTO race_rewards VALUES
